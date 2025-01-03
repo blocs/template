@@ -39,7 +39,7 @@ class LoginController extends Controller
     public function __construct()
     {
         // ログイン後の遷移先
-        $this->redirectTo = '/home';
+        $this->redirectTo = '/';
 
         $this->viewPrefix = 'admin.auth';
     }
