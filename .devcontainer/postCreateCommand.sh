@@ -3,7 +3,7 @@ cp .env.example .env
 composer install
 php artisan key:generate
 touch database/database.sqlite
-php artisan migrate
+php artisan blocs:admin
 sudo apt-get update
 sudo apt-get install -y sqlite3
 
