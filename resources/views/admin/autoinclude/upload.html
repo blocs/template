@@ -1,0 +1,145 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css" integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js" integrity="sha512-U2WE1ktpMTuRBPoCFDzomoIorbOyUv0sP8B+INA3EzNAhehbzED1rOJg6bCqPf/Tuposxb5ja/MAUnC8THSbLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+    var aiDownload = "{{ route(prefix().'.download', [ 'filename' => 'dummyFilename' ]) }}";
+    var aiThumbnail = "{{ route(prefix().'.thumbnail', [ 'filename' => 'dummyFilename', 'size' => 'thumbnail' ]) }}";
+    var aiFileupload = {
+        update:  function(dropzoneDiv){
+            var fileList = [];
+            dropzoneDiv.querySelectorAll(".dz-preview[data-ai-filename]").forEach(function(previewElement, i) {
+                fileList.push({
+                    filename: previewElement.dataset.aiFilename,
+                    name: previewElement.dataset.aiName,
+                    size: previewElement.dataset.aiSize,
+                    thumbnail: previewElement.dataset.aiThumbnail
+                });
+            });
+            dropzoneDiv.previousElementSibling.value = (fileList.length ? JSON.stringify(fileList) : "");
+        }
+    };
+
+    Dropzone.autoDiscover = false;
+    new MutationObserver((mutations) => {
+        document.querySelectorAll(".ai-upload").forEach(function(item, i) {
+            item.classList.remove("ai-upload");
+            var dropzoneDiv = document.createElement("div");
+            dropzoneDiv.classList.add("dropzone");
+            item.parentNode.insertBefore(dropzoneDiv, item.nextSibling);
+
+            var myDropzone = new Dropzone(dropzoneDiv, {
+                url: "{{ route(prefix().'.upload') }}?name=" + item.name,
+                addRemoveLinks: true,
+                <!-- data-exist=$uploadMessage -->dictDefaultMessage: "<!-- $uploadMessage data-convert="raw" -->",<!-- data-endexist -->
+                <!-- data-exist=$uploadDelete -->dictRemoveFile: "<!-- $uploadDelete data-convert="raw" -->",<!-- data-endexist -->
+                paramName: "upload",
+                maxFiles: (null == item.getAttribute("multiple") ? 1 : null),
+                headers: {
+                    "X-CSRF-TOKEN" : "{{ csrf_token() }}"
+                },
+                maxfilesexceeded: (file) => {
+                    var dropzoneDiv = file.previewElement.closest(".dropzone");
+                    dropzoneDiv.dropzone.removeFile(file);
+                },
+                error: (file, message) => {
+                    if (file.previewElement) {
+                        file.previewElement.classList.add("dz-error");
+                        if (typeof message.errors === "object") {
+                            message = message.errors.upload.join("\n");
+                        } else if (typeof message !== "string" && message.error) {
+                            message = message.error;
+                        } else if (typeof message !== "string" && message.message) {
+                            message = message.message;
+                        }
+                        for (let node of file.previewElement.querySelectorAll(
+                            "[data-dz-errormessage]"
+                        )) {
+                            node.textContent = message;
+                        }
+                    }
+                }
+            }).on("success", (file, response) => {
+                var json = response;
+                if ("object" != typeof response) {
+                    json = JSON.parse(response);
+                }
+                delete file.previewElement.querySelector(".dz-details").dataset.dzRemove;
+                var dropzoneDiv = file.previewElement.closest(".dropzone");
+                file.previewElement.dataset.aiTarget = dropzoneDiv.previousElementSibling.name;
+                file.previewElement.dataset.aiFilename = json.filename;
+                file.previewElement.dataset.aiName = json.name;
+                file.previewElement.dataset.aiSize = json.size;
+                file.previewElement.dataset.aiThumbnail = json.thumbnail;
+                aiFileupload.update(dropzoneDiv);
+                if (typeof callbackDZsuccess == 'function') {
+                    callbackDZsuccess(dropzoneDiv, file, response);
+                }
+            }).on("removedfile", (file) => {
+                var aiTarget = file.previewElement.dataset.aiTarget;
+                if (aiTarget) {
+                    var dropzoneDiv = document.querySelector("[name="+CSS.escape(aiTarget)+"]").nextElementSibling;
+                    aiFileupload.update(dropzoneDiv);
+                }
+                if (typeof callbackDZremovedfile == 'function') {
+                    callbackDZremovedfile(dropzoneDiv, file);
+                }
+            });
+
+            // 既存のファイル表示
+            if (item.value) {
+                var fileList = JSON.parse(item.value);
+                fileList.forEach(function(file, i) {
+                    var mockFile = {
+                        name: file.name,
+                        size: file.size,
+                        accepted: true
+                    };
+                    if (1 == file.thumbnail) {
+                        myDropzone.displayExistingFile(mockFile, aiThumbnail.replace("dummyFilename", file.filename));
+                    } else {
+                        myDropzone.displayExistingFile(mockFile, "", null, null, false);
+
+                    }
+                    var previewElement = dropzoneDiv.querySelector(".dz-preview:last-of-type");
+                    previewElement.dataset.aiTarget = item.name;
+                    previewElement.dataset.aiFilename = file.filename;
+                    previewElement.dataset.aiName = file.name;
+                    previewElement.dataset.aiSize = file.size;
+                    previewElement.dataset.aiThumbnail = file.thumbnail;
+                    myDropzone.files.push(mockFile);
+                    if (1 != file.thumbnail) {
+                        previewElement.querySelector(".dz-image img").removeAttribute("alt");
+                        previewElement.classList.add("dz-file-preview");
+                        previewElement.classList.remove("dz-image-preview");
+                    }
+                });
+            }
+
+            dropzoneDiv.addEventListener("click", function (event) {
+                if (event.target.classList.contains("dz-details") || event.target.closest(".dz-details")) {
+                    var detailElement = event.target.closest(".dz-details") ? event.target.closest(".dz-details") : event.target;
+                    var previewElement = detailElement.parentNode;
+                    var dropzoneDiv = previewElement.closest(".dropzone");
+                    if (previewElement.classList.contains("dz-error")) {
+                        // ファイルの削除
+                        var count = 0;
+                        var previewElements = previewElement.parentNode.querySelectorAll(".dz-preview");
+                        for (var i = 0; i < previewElements.length; i++) {
+                            if (previewElement === previewElements[i]) {
+                                break;
+                            }
+                            ++count;
+                        }
+                        var file = dropzoneDiv.dropzone.files[count];
+                        dropzoneDiv.dropzone.removeFile(file);
+                    } else {
+                        // ファイルへのリンク
+                        window.open(aiDownload.replace("dummyFilename", previewElement.dataset.aiFilename))
+                    }
+                }
+            });
+        });
+    }).observe(document, {
+        childList: true,
+        subtree: true
+    });
+</script>

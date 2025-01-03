@@ -1,0 +1,10 @@
+<!-- data-if=session("message") -->
+    <!-- $noticeCategory=session("category") -->
+    <!-- data-if="isset($noticeCategory) && $noticeCategory === 'error'" -->
+    <!-- $noticeCategory="danger" --> 
+    <!-- data-endif -->
+    <div :class="alert alert-{$noticeCategory} alert-dismissible mb-0" role="alert">
+        <!-- data-val=session("message") -->
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<!-- data-endif -->

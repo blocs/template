@@ -1,0 +1,88 @@
+<!-- data-bloc="button_href" -->
+    <a :href=$buttonHref :class=$buttonClass>
+        <i :class=$buttonIcon data-exist=$buttonIcon></i> <!-- $buttonLabel -->
+    </a>
+
+    <!-- $buttonHref="" $buttonClass="" $buttonIcon="" $buttonLabel="" -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="button_back" -->
+    <!--
+        data-include="button_href"
+        $buttonHref="./"
+        $buttonClass="btn btn-outline-secondary"
+        $buttonIcon="fa-solid fa-arrow-left"
+        $buttonLabel=lang("template:resource_blocs_button_back")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="button_create" -->
+    <!--
+        data-include="button_href"
+        $buttonHref=route(prefix().".create")
+        $buttonClass="btn btn-primary"
+        $buttonIcon="fa-solid fa-plus"
+        $buttonLabel=lang("template:resource_blocs_button_new")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="button" -->
+    <!-- :type=$buttonType data-exist=$buttonType -->
+    <!-- :data-novalidate="{$modalNoValidate}" data-if="isset($modalNoValidate) && $modalNoValidate" -->
+    <button type="button" :class=$buttonClass>
+        <i :class=$buttonIcon data-exist=$buttonIcon></i> <!-- $buttonLabel -->
+    </button>
+
+    <!-- $buttonType="" $buttonClass="" $buttonIcon="" $buttonLabel="" -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="button_target" -->
+    <!-- :data-bs-toggle="modal" -->
+    <!-- :data-bs-target="#{$modalName}" -->
+    <!-- data-include="button" -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="button_primary" -->
+    <!--
+        data-include="button_target"
+        $buttonClass="btn btn-primary"
+        $buttonIcon="fa-solid fa-arrow-right"
+        $buttonLabel=lang("template:resource_blocs_button_confirm")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="button_info" -->
+    <!--
+        data-include="button_target"
+        $buttonClass="btn btn-info"
+        $buttonIcon="fa-solid fa-info-circle"
+        $buttonLabel=lang("template:resource_blocs_button_confirm")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="button_success" -->
+    <!--
+        data-include="button_target"
+        $buttonClass="btn btn-success"
+        $buttonIcon="fa-solid fa-check"
+        $buttonLabel=lang("template:resource_blocs_button_confirm")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="button_danger" -->
+    <!--
+        data-include="button_target"
+        $buttonClass="btn btn-danger"
+        $buttonIcon="fa-solid fa-trash"
+        $buttonLabel=lang("template:resource_blocs_button_delete")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="button_warning" -->
+    <!--
+        data-include="button_target"
+        $buttonClass="btn btn-warning"
+        $buttonIcon="fa-solid fa-exclamation-triangle"
+        $buttonLabel=lang("template:resource_blocs_button_warning")
+    -->
+<!-- data-endbloc -->

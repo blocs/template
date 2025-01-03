@@ -1,0 +1,255 @@
+<!-- data-bloc="buttonBackModal" -->
+    <!-- :data-bs-dismiss="modal" -->
+    <!--
+        data-include="button"
+        $buttonModalBackClass="btn btn-outline-secondary"
+        $buttonClass=$buttonModalBackClass
+        $buttonModalBackIcon="fa-solid fa-arrow-left"
+        $buttonIcon=$buttonModalBackIcon
+        $buttonModalBackLabel=lang("template:resource_blocs_button_back")
+        $buttonLabel=$buttonModalBackLabel
+    -->
+
+    <!-- $buttonModalBackClass="" $buttonModalBackIcon="" $buttonModalBackLabel="" -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="buttonModal" -->
+    <!-- :formaction=$modalAction data-exist=$modalAction -->
+    <!--
+        data-include="button"
+        $buttonType="submit"
+        $buttonClass=$buttonModalClass
+        $buttonIcon=$buttonModalIcon
+        $buttonLabel=$buttonModalLabel
+    -->
+
+    <!-- $buttonModalClass="" $buttonModalIcon="" $buttonModalLabel="" -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="buttonPrimaryModal" -->
+    <!--
+        data-include="buttonModal"
+        $buttonModalClass="btn btn-primary"
+        $buttonModalIcon="fa-solid fa-arrow-right"
+        $buttonModalLabel=lang("template:resource_blocs_button_submit")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="buttonInfoModal" -->
+    <!--
+        data-include="buttonModal"
+        $buttonModalClass="btn btn-info"
+        $buttonModalIcon="fa-solid fa-info-circle"
+        $buttonModalLabel=lang("template:resource_blocs_button_submit")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="buttonSuccessModal" -->
+    <!--
+        data-include="buttonModal"
+        $buttonModalClass="btn btn-success"
+        $buttonModalIcon="fa-solid fa-check"
+        $buttonModalLabel=lang("template:resource_blocs_button_submit")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="buttonDangerModal" -->
+    <!--
+        data-include="buttonModal"
+        $buttonModalClass="btn btn-danger"
+        $buttonModalIcon="fa-solid fa-trash"
+        $buttonModalLabel=lang("template:resource_blocs_button_delete")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="buttonWarningModal" -->
+    <!--
+        data-include="buttonModal"
+        $buttonModalClass="btn btn-warning"
+        $buttonModalIcon="fa-solid fa-exclamation-triangle"
+        $buttonModalLabel=lang("template:resource_blocs_button_warning")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="modal_logout" -->
+    <!-- ログアウトモーダル -->
+    <!-- $modalName="modalLogout" data-none -->
+
+    <!-- モーダル設定 -->
+    <!-- data-bloc="modalFooterRight" -->
+        <form method="post">
+            @csrf
+            <!--
+                data-include="buttonPrimaryModal"
+                $modalAction=route("logout")
+                $buttonModalIcon="fa-solid fa-sign-out-alt"
+                $buttonModalLabel=lang("template:resource_blocs_logout_button")
+            -->
+        </form>
+    <!-- data-endbloc -->
+
+    <!-- モーダル表示 -->
+    <!--
+        data-include="modal"
+        $modalTitle=lang("template:resource_blocs_logout_title")
+        $modalMessage=lang("template:resource_blocs_logout_message")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="modal_store" -->
+    <!-- 新規作成モーダル -->
+    <!-- $modalName="modalStore" data-none -->
+
+    <!-- ボタン設定 -->
+    <!-- data-include="button_primary" -->
+
+    <!-- モーダル設定 -->
+    <!-- data-bloc="modalFooterRight" -->
+        <!--
+            data-include="buttonPrimaryModal"
+            $modalAction=route(prefix().".store")
+        -->
+    <!-- data-endbloc -->
+
+    <!-- モーダル表示 -->
+    <!--
+        data-include="modal"
+        $modalTitle=lang("template:resource_blocs_modal_new_title")
+        $modalMessage=lang("template:resource_blocs_modal_new_message")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="modal_update" -->
+    <!-- 更新モーダル -->
+    <!-- $modalName="modalUpdate" data-none -->
+
+    <!-- ボタン設定 -->
+    <!-- data-include="button_primary" -->
+
+    <!-- モーダル設定 -->
+    <!-- data-bloc="modalFooterRight" -->
+        <!--
+            data-include="buttonPrimaryModal"
+            $modalAction=route(prefix().".update", ["id" => $id])
+            $buttonModalLabel=lang("template:resource_blocs_modal_update_button")
+        -->
+    <!-- data-endbloc -->
+
+    <!-- モーダル表示 -->
+    <!--
+        data-include="modal"
+        $modalTitle=lang("template:resource_blocs_modal_update_title")
+        $modalMessage=lang("template:resource_blocs_modal_update_message")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="modal_destroy" -->
+    <!-- 削除モーダル -->
+    <!-- $modalName="modalDestroy" data-none -->
+
+    <!-- ボタン設定 -->
+    <!-- data-include="button_danger" -->
+
+    <!-- モーダル設定 -->
+    <!-- data-bloc="modalFooterRight" -->
+        <!--
+            data-include="buttonDangerModal"
+            $modalAction=route(prefix().".destroy", ["id" => $id])
+        -->
+    <!-- data-endbloc -->
+
+    <!-- モーダル表示 -->
+    <!--
+        data-include="modal"
+        $modalTitle=lang("template:resource_blocs_modal_delete_title")
+        $modalMessage=lang("template:resource_blocs_modal_delete_message")
+    -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="modalFooterLeft" -->
+    <!-- data-include="buttonBackModal" -->
+<!-- data-endbloc -->
+
+<!-- data-bloc="modalFooter" -->
+    <div class="modal-footer">
+        <div class="w-100 d-flex flex-wrap justify-content-between">
+            <div>
+                <!-- data-include="modalFooterLeft" -->
+            </div>
+            <div>
+                <!-- data-include="modalFooterRight" -->
+            </div>
+        </div>
+    </div>
+<!-- data-endbloc -->
+
+<!-- data-bloc="modal" -->
+    <div :id=$modalName class="modal fade" tabindex="-1" aria-hidden="true">
+        <!-- :class=$modalClass data-exist=$modalClass -->
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"><!-- $modalTitle --></h1>
+                </div>
+                <div class="modal-body">
+                    <p><!-- $modalMessage --></p>
+                    <!-- data-include="modalBody" data-exist -->
+                </div>
+                <!-- data-include="modalFooter" data-exist -->
+            </div>
+        </div>
+    </div>
+
+    <!-- $modalName="" $modalAction="" $modalClass="" $modalTitle="" $modalMessage="" $formAction="" $modalNoValidate="" -->
+    <!-- data-bloc="modalBody" --><!-- data-endbloc -->
+    <!-- data-bloc="modalFooterRight" --><!-- data-endbloc -->
+<!-- data-endbloc -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+    if (document.querySelectorAll("[data-modalaction]").length != 0) {
+        document.querySelectorAll('[data-modalaction]').forEach(function(item, i) {
+            item.addEventListener("click", function(){
+                document.querySelector(this.dataset.bsTarget + " button[type=submit]").setAttribute("formaction", this.dataset.modalaction);
+            });
+        });
+    }
+});
+
+new MutationObserver((mutations) => {
+    document.querySelectorAll("[data-bs-toggle=modal]").forEach(function(item, i) {
+        delete item.dataset.bsToggle;
+        document.querySelector(item.dataset.bsTarget).querySelectorAll("button").forEach(el => setAttributes(el, {
+            "disabled": "disabled"
+        }));
+        const modal = new bootstrap.Modal(document.querySelector(item.dataset.bsTarget))
+        const modalElement = document.querySelector(item.dataset.bsTarget)
+        modalElement.addEventListener("show.bs.modal", event => {
+            modalElement.querySelectorAll("button").forEach(function(item, i) {
+                item.removeAttribute("disabled")
+            });
+        });
+        modalElement.addEventListener("hide.bs.modal", event => {
+            modalElement.querySelectorAll("button").forEach(el => setAttributes(el, {
+                "disabled": "disabled"
+            }));
+        });
+        item.addEventListener("click", function(event){
+            if (item.closest("form")) {
+                if (item.dataset.novalidate) {
+                    item.closest("form").setAttribute("novalidate", true);
+                } else {
+                    item.closest("form").removeAttribute("novalidate");
+                    if (!item.closest("form").reportValidity()) {
+                        return;
+                    }
+                }
+            }
+            modal.show()
+        }, true);
+    });
+}).observe(document, {
+    childList: true,
+    subtree: true
+});
+</script>
