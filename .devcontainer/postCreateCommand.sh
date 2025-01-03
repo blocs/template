@@ -1,4 +1,5 @@
 #!/bin/bash
+echo ".env" >> .gitignore
 composer install
 php artisan key:generate
 touch database/database.sqlite
