@@ -1,6 +1,7 @@
 # Github CodespacesでVueを使う時の手順
-1. sudo apt-get install npm
-2. npm install @vitejs/plugin-vue --save-dev
+1. サーバー起動 php artisan serve > /dev/null &
+2. sudo apt-get install npm
+3. npm install @vitejs/plugin-vue --save-dev
 
 # コーディング
 1. resources/js/app.js
@@ -9,7 +10,7 @@ import App from '../src/App.vue';
 
 createApp(App).mount('#app');
 
-2. esources/src/App.vue
+2. resources/src/App.vue
 <script setup lang="ts">
 import {ref} from "vue";
 
@@ -26,8 +27,7 @@ const name = ref("鈴木一郎");
 
 @vite('resources/js/app.js')
 
-4. サーバー起動 php artisan serve --port=8677 &
-5. npm run dev
+4. npm run dev
 
 # ビルド
 1. npm run build

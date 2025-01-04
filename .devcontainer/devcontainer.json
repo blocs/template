@@ -2,13 +2,7 @@
     "name": "Laravel Codespaces Container",
     "image": "mcr.microsoft.com/devcontainers/php:8.3",
     "postCreateCommand": "chmod +x .devcontainer/postCreateCommand.sh && .devcontainer/postCreateCommand.sh",
-    "portsAttributes": {
-        "8677": {
-            "label": "Application",
-            "onAutoForward": "openPreview"
-        }
-    },
-    "forwardPorts": [8677],
+    "forwardPorts": [8000],
     "customizations": {
         "vscode": {
             "extensions": [
