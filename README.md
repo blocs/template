@@ -26,7 +26,7 @@ const name = ref("鈴木一郎");
 
 @vite('resources/js/app.js')
 
-4. サーバー起動 php artisan serve &
+4. サーバー起動 php artisan serve --port=8677 &
 5. npm run dev
 
 # ビルド
