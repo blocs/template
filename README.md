@@ -1,5 +1,5 @@
 # Github CodespacesでVueを使う時の手順
-1. サーバー起動 php artisan serve > /dev/null &
+1. 別ターミナルでサーバー起動 php artisan serve
 2. sudo apt-get install npm
 3. npm install @vitejs/plugin-vue --save-dev
 
