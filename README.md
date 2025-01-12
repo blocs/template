@@ -18,7 +18,7 @@ const name = ref("鈴木一郎");
 </script>
 
 <template>
-    <h1>こんにちは{{name}}さん!</h1>
+    <h1>こんにちは{{ name }}さん!</h1>
 </template>
 
 3. テンプレート
